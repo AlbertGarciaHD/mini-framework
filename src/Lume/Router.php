@@ -1,6 +1,6 @@
 <?php
-require './HttpMethod.php';
-require './HttpNotFoundException.php';
+
+namespace Lume;
 
 class Router
 {
@@ -21,16 +21,31 @@ class Router
 
     public function post(string $uri, callable $action)
     {
-
         $this->routes[HttpMethod::POST->value][$uri] = $action;
     }
 
-    public function resolve() {
+    public function put(string $uri, callable $action)
+    {
+        $this->routes[HttpMethod::PUT->value][$uri] = $action;
+    }
+
+    public function patch(string $uri, callable $action)
+    {
+        $this->routes[HttpMethod::PATCH->value][$uri] = $action;
+    }
+
+    public function delete(string $uri, callable $action)
+    {
+        $this->routes[HttpMethod::DELETE->value][$uri] = $action;
+    }
+
+    public function resolve()
+    {
         $method = $_SERVER["REQUEST_METHOD"];
         $uri = $_SERVER["REQUEST_URI"];
         $action = $this->routes[$method][$uri] ?? null;
-        
-        if( is_null( $action ) ) {
+
+        if (is_null($action)) {
             throw new HttpNotFoundException();
         }
         return $action;

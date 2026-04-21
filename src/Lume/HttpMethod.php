@@ -1,6 +1,9 @@
-<?php 
+<?php
 
-enum HttpMethod: string {
+namespace Lume;
+
+enum HttpMethod: string
+{
     case GET = "GET";
     case POST = "POST";
     case PUT = "PUT";
