@@ -39,10 +39,8 @@ class Router
         $this->routes[HttpMethod::DELETE->value][$uri] = $action;
     }
 
-    public function resolve()
+    public function resolve( string $uri, string $method )
     {
-        $method = $_SERVER["REQUEST_METHOD"];
-        $uri = $_SERVER["REQUEST_URI"];
         $action = $this->routes[$method][$uri] ?? null;
 
         if (is_null($action)) {

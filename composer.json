@@ -8,6 +8,14 @@
             "Lume\\": "src/Lume"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Lume\\Tests\\" : "tests"
+        }
+    },
+    "scripts": {
+        "tests" : "phpunit --color=always --testdox -v tests/"
+    },
     "authors": [
         {
             "name": "AlbertGarciaHD",
