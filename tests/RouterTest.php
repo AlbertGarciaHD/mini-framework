@@ -81,8 +81,8 @@ class RouterTest extends TestCase
             $this->assertEquals( $action, $router->resolve( $uri, $method->value) );
         } 
     }
-    public function testBasicRouting()
-    {
+    // public function testBasicRouting()
+    // {
         // $router = new Router();
 
         // $router->get('/hello', function() {
@@ -94,10 +94,10 @@ class RouterTest extends TestCase
 
         // $this->assertEquals(200, $response->getStatusCode());
         // $this->assertEquals('Hello, World!', $response->getBody());
-    }
+    // }
 
-    public function testRouteParameters()
-    {
+    // public function testRouteParameters()
+    // {
         // $router = new Router();
 
         // $router->get('/user/{id}', function($id) {
@@ -109,10 +109,10 @@ class RouterTest extends TestCase
 
         // $this->assertEquals(200, $response->getStatusCode());
         // $this->assertEquals('User ID: 42', $response->getBody());
-    }
+    // }
 
-    public function testMiddlewareExecution()
-    {
+    // public function testMiddlewareExecution()
+    // {
         // $router = new Router();
         // $middlewareStack = new MiddlewareStack();
 
@@ -142,5 +142,5 @@ class RouterTest extends TestCase
         // $response = $router->handle($request);
         // $this->assertEquals(200, $response->getStatusCode());
         // $this->assertEquals('Protected Content', $response->getBody());
-    }
+    // }
 }

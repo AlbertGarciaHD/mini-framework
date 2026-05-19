@@ -14,7 +14,7 @@
         }
     },
     "scripts": {
-        "tests" : "phpunit --color=always --testdox -v tests/"
+        "tests" : "phpunit --color=always --testdox tests/"
     },
     "authors": [
         {
