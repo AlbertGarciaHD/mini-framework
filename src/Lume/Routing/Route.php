@@ -1,6 +1,6 @@
 <?php 
 
-namespace Lume;
+namespace Lume\Routing;
 
 use Closure;
 

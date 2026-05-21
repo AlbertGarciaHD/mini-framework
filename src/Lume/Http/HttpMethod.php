@@ -1,6 +1,6 @@
 <?php
 
-namespace Lume;
+namespace Lume\Http;
 
 enum HttpMethod: string
 {

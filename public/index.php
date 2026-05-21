@@ -1,8 +1,10 @@
 <?php
-
 require_once '../vendor/autoload.php';
 
-use Lume\{HttpNotFoundException, Request, Router, Server};
+use Lume\Http\HttpNotFoundException;
+use Lume\Routing\Router;
+use Lume\Server\PhpNativeServer;
+use Lume\Http\Request;
 
 $router = new Router();
 
@@ -16,9 +18,9 @@ $router->post('/test', function () {
 
 
 try {
-    $route = $router->resolve( new Request( new Server() ) );
+    $route = $router->resolve( new Request( new PhpNativeServer() ) );
     $action = $route->action();
-    print_r($action());
+    print($action());
     // $route = new Route('/test/1/user/2', fn() => 'test');
     // var_dump($route);
 } catch (HttpNotFoundException $th) {

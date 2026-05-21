@@ -1,8 +1,8 @@
 <?php
 
-namespace Lume\Tests;
+namespace Lume\Tests\Routing;
 
-use Lume\Route;
+use Lume\Routing\Route;
 use PHPUnit\Framework\TestCase;
 
 class RouteTest extends TestCase

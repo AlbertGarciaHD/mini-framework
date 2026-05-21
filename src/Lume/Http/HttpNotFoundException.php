@@ -1,5 +1,5 @@
 <?php 
- namespace Lume;
+ namespace Lume\Http;
  
 class HttpNotFoundException extends \Exception {
     

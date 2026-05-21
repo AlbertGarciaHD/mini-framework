@@ -1,20 +1,24 @@
 <?php
 
-namespace Lume\Tests;
+namespace Lume\Tests\Routing;
 
-// use Lume\Router;
-// use Lume\Request;
-// use Lume\Response;
-// use Lume\Middleware\MiddlewareInterface;
-// use Lume\Middleware\MiddlewareStack;
-
-use Lume\HttpMethod;
-use Lume\Route;
-use Lume\Router;
+use Lume\Http\HttpMethod;
+use Lume\Http\Request;
+use Lume\Routing\Router;
+use Lume\Server\Server;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase
 {
+    private function createMockeRequest( string $uri, HttpMethod $httpMethod ) : Request
+    {
+        $mockServer = $this->getMockBuilder( Server::class )->getMock();
+        $mockServer->method('requestUri')->willReturn($uri);
+        $mockServer->method('requestMethod')->willReturn($httpMethod);
+
+        return new Request( $mockServer );
+    }
+
     public function test_resolve_basic_route_with_callback_action()
     {
         $uri = '/test';
@@ -22,7 +26,7 @@ class RouterTest extends TestCase
         $router = new Router();
         $router->get($uri, $action);
 
-        $route = $router->resolve($uri, HttpMethod::GET->value);
+        $route = $router->resolve( $this->createMockeRequest( $uri, HttpMethod::GET ) );
         $this->assertEquals($action, $route->action());
         $this->assertEquals($uri, $route->uri());
     }
@@ -45,7 +49,7 @@ class RouterTest extends TestCase
 
         foreach ($routes as $uri => $action) {
             // $this->assertEquals($action, $router->resolve($uri, HttpMethod::GET->value));
-            $route = $router->resolve($uri, HttpMethod::GET->value);
+            $route = $router->resolve( $this->createMockeRequest( $uri, HttpMethod::GET ) );
             $this->assertEquals($action, $route->action());
             $this->assertEquals($uri, $route->uri());
         }
@@ -84,7 +88,7 @@ class RouterTest extends TestCase
 
         foreach ($routes as [$method, $uri, $action]) {
             // $this->assertEquals($action, $router->resolve($uri, $method->value));
-            $route = $router->resolve($uri, $method->value);
+            $route = $router->resolve( $this->createMockeRequest( $uri, $method ) );
             $this->assertEquals($action, $route->action());
             $this->assertEquals($uri, $route->uri());
         }

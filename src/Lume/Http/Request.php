@@ -1,6 +1,8 @@
 <?php
 
-namespace Lume;
+namespace Lume\Http;
+
+use Lume\Server\Server;
 
 class Request
 {

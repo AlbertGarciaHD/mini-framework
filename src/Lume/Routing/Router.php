@@ -1,8 +1,11 @@
 <?php
 
-namespace Lume;
+namespace Lume\Routing;
 
 use Closure;
+use Lume\Http\HttpMethod;
+use Lume\Http\HttpNotFoundException;
+use Lume\Http\Request;
 
 class Router
 {

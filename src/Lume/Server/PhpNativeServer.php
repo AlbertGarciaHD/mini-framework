@@ -1,8 +1,10 @@
 <?php
 
-namespace Lume;
+namespace Lume\Server;
 
-class Server
+use Lume\Http\HttpMethod;
+
+class PhpNativeServer implements Server
 {
     public function requestUri(): string {
         return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
