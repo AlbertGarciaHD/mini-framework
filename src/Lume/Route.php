@@ -2,16 +2,18 @@
 
 namespace Lume;
 
+use Closure;
+
 class Route {
     protected string $uri;
     protected \Closure $action;
     protected string $regex;
     protected array $parameters;
-    public function __construct( string $uri, \Closure $action )
+    public function __construct( string $uri, Closure $action )
     {
         $this->uri = $uri;
         $this->action = $action;
-        $this->regex = preg_replace('/\{([a-zA-Z]+)\}/', '([a-zA-Z0-9]+)', $$uri );
+        $this->regex = preg_replace('/\{([a-zA-Z]+)\}/', '([a-zA-Z0-9]+)', $uri );
         preg_match_all('/\{([a-zA-Z]+)\}/', $uri, $parameters);
         $this->parameters = $parameters[1];
     }
@@ -22,12 +24,12 @@ class Route {
 
 
     public function action() {
-        return $this->uri;
+        return $this->action;
     }
 
     public function matches( string $uri ) :bool 
     {
-        return preg_match("#^$this->regex$#", $uri);
+        return preg_match("#^$this->regex/?$#", $uri);
     }
 
     public function hasParameters() : bool 
