@@ -3,6 +3,7 @@
 namespace Lume\Server;
 
 use Lume\Http\HttpMethod;
+use Lume\Http\Response;
 
 class PhpNativeServer implements Server
 {
@@ -20,5 +21,17 @@ class PhpNativeServer implements Server
 
     public function requestParams(): array {
         return $_GET;
+    }
+
+    public function sendResponse( Response $response ){
+        header( "Content-Type: None");
+        header_remove("Content-Type");
+        
+        $response->prepare();
+        http_response_code( $response->status() );
+        foreach( $response->headers() as $header => $value ) {
+            header("$header: $value");
+        }
+        print( $response->content() ); 
     }
 }

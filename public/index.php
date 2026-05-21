@@ -5,25 +5,32 @@ use Lume\Http\HttpNotFoundException;
 use Lume\Routing\Router;
 use Lume\Server\PhpNativeServer;
 use Lume\Http\Request;
+use Lume\Http\Response;
 
 $router = new Router();
 
 $router->get('/test', function () {
-    return "Get Ok";
+    return Response::text('Hola desde Get');
 });
 
 $router->post('/test', function () {
-    return "Post Ok";
+    return Response::text("Hola desde Post");
+});
+
+$router->get('/redirect', function () {
+    return Response::redirect('/test');
 });
 
 
+$server = new PhpNativeServer();
+
 try {
-    $route = $router->resolve( new Request( new PhpNativeServer() ) );
+    $request = new Request( $server );
+    $route = $router->resolve($request);
     $action = $route->action();
-    print($action());
-    // $route = new Route('/test/1/user/2', fn() => 'test');
-    // var_dump($route);
+    $response = $action($request);
+    $server->sendResponse( $response );
+
 } catch (HttpNotFoundException $th) {
-    print("Not Found");
-    http_response_code(404);
+    $server->sendResponse( Response::text("Not Found")->setStatus(404) );
 }

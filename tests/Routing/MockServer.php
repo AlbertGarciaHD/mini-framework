@@ -3,6 +3,7 @@
 namespace Lume\Tests\Routing;
 
 use Lume\Http\HttpMethod;
+use Lume\Http\Response;
 use Lume\Server\Server;
 
 class MockServer implements Server
@@ -30,5 +31,17 @@ class MockServer implements Server
 
     public function requestParams(): array {
         return [];
+    }
+
+    public function sendResponse( Response $response ){
+        header( "Content-Type: None");
+        header_remove("Content-Type");
+        
+        $response->prepare();
+        http_response_code( $response->status() );
+        foreach( $response->headers() as $header => $value ) {
+            header("$header: $value");
+        }
+        print( $response->content() ); 
     }
 }
