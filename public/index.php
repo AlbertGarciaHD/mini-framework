@@ -2,7 +2,7 @@
 
 require_once '../vendor/autoload.php';
 
-use Lume\{HttpNotFoundException, Router};
+use Lume\{HttpNotFoundException, Request, Router, Server};
 
 $router = new Router();
 
@@ -16,7 +16,7 @@ $router->post('/test', function () {
 
 
 try {
-    $route = $router->resolve( $_SERVER["REQUEST_URI"], $_SERVER["REQUEST_METHOD"]);
+    $route = $router->resolve( new Request( new Server() ) );
     $action = $route->action();
     print_r($action());
     // $route = new Route('/test/1/user/2', fn() => 'test');

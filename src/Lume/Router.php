@@ -46,10 +46,10 @@ class Router
         $this->routes[ $method->value ][] = new Route($uri, $action);
     }
 
-    public function resolve( string $uri, string $method )
+    public function resolve( Request $request )
     {
-        foreach ($this->routes[$method] as $route) {
-            if ($route->matches($uri)) {
+        foreach ($this->routes[ $request->method()->value ] as $route) {
+            if ($route->matches($request->uri() )) {
                 // return $route->getAction();
                 return $route;
             }

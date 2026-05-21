@@ -6,7 +6,7 @@ use Closure;
 
 class Route {
     protected string $uri;
-    protected \Closure $action;
+    protected Closure $action;
     protected string $regex;
     protected array $parameters;
     public function __construct( string $uri, Closure $action )
