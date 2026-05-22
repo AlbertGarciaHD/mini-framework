@@ -17,6 +17,13 @@ $router->post('/test', function () {
     return Response::text("Hola desde Post");
 });
 
+$router->post('/data', function ( Request $request) {
+    return Response::json([
+        'post' => $request->data(),
+        'get' => $request->query()
+    ]);
+});
+
 $router->get('/redirect', function () {
     return Response::redirect('/test');
 });
@@ -25,7 +32,7 @@ $router->get('/redirect', function () {
 $server = new PhpNativeServer();
 
 try {
-    $request = new Request( $server );
+    $request = $server->getRequest();
     $route = $router->resolve($request);
     $action = $route->action();
     $response = $action($request);
