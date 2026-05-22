@@ -2,7 +2,8 @@
 
 namespace Lume\Server;
 
-use Lume\Http\HttpMethod;
+// use Lume\Http\HttpMethod;
+use Lume\Http\Request;
 use Lume\Http\Response;
 
 /**
@@ -14,22 +15,28 @@ interface Server
      * Summary of requestUri
      * @return array|bool|int|string|null
      */
-    public function requestUri(): string;
+    // public function requestUri(): string;
     /**
      * Summary of requestMethod
      * @return HttpMethod
      */
-    public function requestMethod(): HttpMethod;
+    // public function requestMethod(): HttpMethod;
     /**
      * Summary of requestData
      * @return array
      */
-    public function requestData(): array;
+    // public function requestData(): array;
     /**
      * Summary of requestParams
      * @return array
      */
-    public function requestParams(): array;
+    // public function requestParams(): array;
+
+    /**
+     * Get Request sent by the Client.
+     * @return  Request
+     */
+    public function getRequest(): Request;
     /**
      * Summary of sendResponse
      * @param Response $response

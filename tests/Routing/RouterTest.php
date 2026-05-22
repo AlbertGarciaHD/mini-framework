@@ -12,11 +12,13 @@ class RouterTest extends TestCase
 {
     private function createMockeRequest(string $uri, HttpMethod $httpMethod): Request
     {
-        $mockServer = $this->getMockBuilder(Server::class)->getMock();
-        $mockServer->method('requestUri')->willReturn($uri);
-        $mockServer->method('requestMethod')->willReturn($httpMethod);
-
-        return new Request($mockServer);
+        // $mockServer = $this->getMockBuilder(Server::class)->getMock();
+        // $mockServer->method('requestUri')->willReturn($uri);
+        // $mockServer->method('requestMethod')->willReturn($httpMethod);
+        // return new Request($mockServer);
+        return (new Request())
+        ->setUri( $uri )
+        ->setMethod( $httpMethod );
     }
 
     public function test_resolve_basic_route_with_callback_action()
