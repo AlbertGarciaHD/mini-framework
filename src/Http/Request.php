@@ -4,6 +4,10 @@ namespace Lume\Http;
 
 use Lume\Server\Server;
 
+/**
+ * Parametros que recibe del Cliente al Servidor.
+ */
+
 class Request
 {
     protected string $uri;
@@ -11,7 +15,7 @@ class Request
     protected array $data;
     protected array $query;
 
-    public function __construct( Server $server )
+    public function __construct(Server $server)
     {
         $this->uri = $server->requestUri();
         $this->method = $server->requestMethod();
@@ -19,36 +23,38 @@ class Request
         $this->query = $server->requestParams();
     }
 
-    
+
 
     /**
      * Get the value of uri
-     */ 
-    public function uri() : string
+     */
+    public function uri(): string
     {
         return $this->uri;
     }
 
     /**
      * Get the value of method
-     */ 
-    public function method() : HttpMethod
+     */
+    public function method(): HttpMethod
     {
         return $this->method;
     }
 
     /**
-     * Get the value of data
-     */ 
-    public function data()
+     * Summary of data
+     * @return array
+     */
+    public function data(): array
     {
         return $this->data;
     }
 
     /**
-     * Get the value of query
-     */ 
-    public function query()
+     * Summary of query
+     * @return array
+     */
+    public function query(): array
     {
         return $this->query;
     }

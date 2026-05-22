@@ -10,23 +10,23 @@ use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase
 {
-    private function createMockeRequest( string $uri, HttpMethod $httpMethod ) : Request
+    private function createMockeRequest(string $uri, HttpMethod $httpMethod): Request
     {
-        $mockServer = $this->getMockBuilder( Server::class )->getMock();
+        $mockServer = $this->getMockBuilder(Server::class)->getMock();
         $mockServer->method('requestUri')->willReturn($uri);
         $mockServer->method('requestMethod')->willReturn($httpMethod);
 
-        return new Request( $mockServer );
+        return new Request($mockServer);
     }
 
     public function test_resolve_basic_route_with_callback_action()
     {
         $uri = '/test';
-        $action = fn() => "test";
+        $action = fn () => "test";
         $router = new Router();
         $router->get($uri, $action);
 
-        $route = $router->resolve( $this->createMockeRequest( $uri, HttpMethod::GET ) );
+        $route = $router->resolve($this->createMockeRequest($uri, HttpMethod::GET));
         $this->assertEquals($action, $route->action());
         $this->assertEquals($uri, $route->uri());
     }
@@ -34,22 +34,21 @@ class RouterTest extends TestCase
     public function test_resolve_multiple_basic_route_with_callback_action()
     {
         $routes = [
-            '/test' => fn() => 'test',
-            '/foo' => fn() => 'foo',
-            '/bar' => fn() => 'bas',
-            '/long/nested/route' => fn() => 'long nested route',
+            '/test' => fn () => 'test',
+            '/foo' => fn () => 'foo',
+            '/bar' => fn () => 'bas',
+            '/long/nested/route' => fn () => 'long nested route',
         ];
 
         $router = new Router();
 
         foreach ($routes as $uri => $action) {
-
             $router->get($uri, $action);
         }
 
         foreach ($routes as $uri => $action) {
             // $this->assertEquals($action, $router->resolve($uri, HttpMethod::GET->value));
-            $route = $router->resolve( $this->createMockeRequest( $uri, HttpMethod::GET ) );
+            $route = $router->resolve($this->createMockeRequest($uri, HttpMethod::GET));
             $this->assertEquals($action, $route->action());
             $this->assertEquals($uri, $route->uri());
         }
@@ -58,23 +57,22 @@ class RouterTest extends TestCase
     public function test_resolve_multiple_basic_routes_with_callback_action_for_different_http_methods()
     {
         $routes = [
-            [HttpMethod::GET, '/test', fn() => 'get'],
-            [HttpMethod::POST, '/test', fn() => 'post'],
-            [HttpMethod::PATCH, '/test', fn() => 'patch'],
-            [HttpMethod::PUT, '/test', fn() => 'put'],
-            [HttpMethod::DELETE, '/test', fn() => 'delete'],
+            [HttpMethod::GET, '/test', fn () => 'get'],
+            [HttpMethod::POST, '/test', fn () => 'post'],
+            [HttpMethod::PATCH, '/test', fn () => 'patch'],
+            [HttpMethod::PUT, '/test', fn () => 'put'],
+            [HttpMethod::DELETE, '/test', fn () => 'delete'],
 
-            [HttpMethod::GET, '/random/get', fn() => 'get'],
-            [HttpMethod::POST, '/random/nested/post', fn() => 'post'],
-            [HttpMethod::PATCH, '/random/route/put', fn() => 'patch'],
-            [HttpMethod::PUT, '/some/patch/route', fn() => 'put'],
-            [HttpMethod::DELETE, '/d', fn() => 'delete'],
+            [HttpMethod::GET, '/random/get', fn () => 'get'],
+            [HttpMethod::POST, '/random/nested/post', fn () => 'post'],
+            [HttpMethod::PATCH, '/random/route/put', fn () => 'patch'],
+            [HttpMethod::PUT, '/some/patch/route', fn () => 'put'],
+            [HttpMethod::DELETE, '/d', fn () => 'delete'],
         ];
 
         $router = new Router();
 
         foreach ($routes as [$method, $uri, $action]) {
-
             match ($method) {
                 HttpMethod::GET => $router->get($uri, $action),
                 HttpMethod::POST => $router->post($uri, $action),
@@ -82,13 +80,13 @@ class RouterTest extends TestCase
                 HttpMethod::PATCH => $router->patch($uri, $action),
                 HttpMethod::DELETE => $router->delete($uri, $action),
             };
-            //otra forma 
+            //otra forma
             // $router->{ strtolower( $method->value)}( $uri, $action );
         }
 
         foreach ($routes as [$method, $uri, $action]) {
             // $this->assertEquals($action, $router->resolve($uri, $method->value));
-            $route = $router->resolve( $this->createMockeRequest( $uri, $method ) );
+            $route = $router->resolve($this->createMockeRequest($uri, $method));
             $this->assertEquals($action, $route->action());
             $this->assertEquals($uri, $route->uri());
         }

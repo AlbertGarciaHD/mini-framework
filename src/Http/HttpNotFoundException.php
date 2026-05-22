@@ -1,6 +1,7 @@
-<?php 
- namespace Lume\Http;
- 
-class HttpNotFoundException extends \Exception {
-    
+<?php
+
+namespace Lume\Http;
+
+class HttpNotFoundException extends \Exception
+{
 }

@@ -5,33 +5,52 @@ namespace Lume\Server;
 use Lume\Http\HttpMethod;
 use Lume\Http\Response;
 
+/**
+ * SERVER de PHP NATIVO
+ */
 class PhpNativeServer implements Server
 {
-    public function requestUri(): string {
+    /**
+     * @inheritDoc
+     */
+    public function requestUri(): string
+    {
         return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     }
-
-    public function requestMethod(): HttpMethod {
+    /**
+     * @inheritDoc
+     */
+    public function requestMethod(): HttpMethod
+    {
         return HttpMethod::from($_SERVER['REQUEST_METHOD']);
     }
-
-    public function requestData(): array {
+    /**
+     * @inheritDoc
+     */
+    public function requestData(): array
+    {
         return $_POST;
     }
-
-    public function requestParams(): array {
+    /**
+     * @inheritDoc
+     */
+    public function requestParams(): array
+    {
         return $_GET;
     }
-
-    public function sendResponse( Response $response ){
-        header( "Content-Type: None");
+    /**
+     * @inheritDoc
+     */
+    public function sendResponse(Response $response)
+    {
+        header("Content-Type: None");
         header_remove("Content-Type");
-        
+
         $response->prepare();
-        http_response_code( $response->status() );
-        foreach( $response->headers() as $header => $value ) {
+        http_response_code($response->status());
+        foreach ($response->headers() as $header => $value) {
             header("$header: $value");
         }
-        print( $response->content() ); 
+        print($response->content());
     }
 }

@@ -1,2 +1,5 @@
 module
 /vendor
+/.vscode
+composer.lock
+.php-cs-fixer.cache
